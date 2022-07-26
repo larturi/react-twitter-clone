@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import SignInSignOut from './pages/SignInSignUp';
 
 export default function App() {
-   const [user, setUser] = useState(null);
+   const [user, setUser] = useState({ name: 'Lea' });
 
-   if (user) {
-      return (
-         <div>
-            <h1>Logueado</h1>
-         </div>
-      );
-   } else {
-      return (
-         <div>
-            <h1>Login</h1>
-            <Button variant="primary">Primary</Button>{' '}
-         </div>
-      );
-   }
+   return (
+      <div>
+         {
+            user ? (
+               <div>
+                  <SignInSignOut />
+               </div>
+            ) : (
+               <div>
+                 <p>Login</p>
+               </div>
+            )
+         }
+      </div>
+   )
 }
