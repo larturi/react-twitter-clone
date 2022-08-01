@@ -38,6 +38,8 @@ input.form-control,
 textarea.form-control {
     background-color: $background-dark-light;
     border-radius: 0;
+    padding: .8rem;
+    margin: 10px 0;
     border: 0;
     border-bottom: 1px solid $border-grey;
     color: $font-light !important;

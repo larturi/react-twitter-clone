@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,17 +10,37 @@ import {
 
 import Logo from '../../assets/png/logo.png';
 import LogoWhite from '../../assets/png/logo-white.png';
+import BasicModal from '../../components/Modal/BasicModal/BasicModal';
+import SignUpForm from '../../components/SignUpForm/SignUpForm';
 
 import './SignInSignUp.scss';
 
 export default function SignInSignUp() {
+
+   const [showModal, setShowModal] = useState(false);
+   const [contentModal, setContentModal] = useState(null);
+
+   const openModal = content => {
+      setShowModal(true);
+      setContentModal(content);
+   }
+
    return (
-      <Container className='signin-signup' fluid>
-         <Row>
-            <LeftComponent />
-            <RightComponent />
-         </Row>
-      </Container>
+      <>
+         <Container className='signin-signup' fluid>
+           <Row>
+               <LeftComponent />
+               <RightComponent openModal={openModal} setShowModal={setShowModal} />
+            </Row>
+         </Container>
+
+         <BasicModal 
+            show={showModal}
+            setShow={setShowModal}
+         >
+            {contentModal}
+         </BasicModal>
+      </>
    );
 }
 
@@ -46,7 +66,7 @@ function LeftComponent() {
    );
 }
 
-function RightComponent() {
+function RightComponent({openModal, setShowModal}) {
    return (
       <Col className='signin-signup__right' xs={6}>
          <div>
@@ -54,10 +74,11 @@ function RightComponent() {
             <h2>Mira lo que esta pasando en el mundo ahora.</h2>
             <h3>Unete hoy mismo!</h3>
 
-            <Button variant='primary'>
+            <Button variant='primary' onClick={() => openModal(<SignUpForm setShowModal={setShowModal} />)}>
                Registrate
             </Button>
-            <Button variant='outline-primary'>
+
+            <Button variant='outline-primary' onClick={() => openModal(<h4>Formulario</h4>)}>
                Iniciar Sesión
             </Button>
          </div>
