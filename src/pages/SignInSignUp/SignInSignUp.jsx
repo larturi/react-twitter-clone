@@ -49,7 +49,18 @@ function LeftComponent() {
 function RightComponent() {
    return (
       <Col className='signin-signup__right' xs={6}>
-         <h2>Right Component</h2>
+         <div>
+            <img src={LogoWhite} alt="Logo" />
+            <h2>Mira lo que esta pasando en el mundo ahora.</h2>
+            <h3>Unete hoy mismo!</h3>
+
+            <Button variant='primary'>
+               Registrate
+            </Button>
+            <Button variant='outline-primary'>
+               Iniciar Sesión
+            </Button>
+         </div>
       </Col>
    );
 }
