@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Row, Col, Form, Button, Spinner } from 'react-bootstrap';
+import { values, size } from 'lodash';
+import { toast } from 'react-toastify';
+import { isEmailValid } from '../../helpers/validations';
 
 import './SignUpForm.scss';
 
@@ -9,8 +12,30 @@ export default function SignUpForm({ setShowModal }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setShowModal(false);
     console.log(formData);
+
+    let validCount = 0;
+
+    values(formData).some((value) => {
+        if (value !== '') {
+            validCount++;
+            return null;
+        }
+    });
+
+    if(validCount !== size(formData)) {
+        toast.warning('Completa todos los campos del formulario');
+    } else {
+        if(!isEmailValid(formData.email)) {
+            toast.warning('Email inválido');
+        } else if (formData.password !== formData.passwordConfirm) {
+            toast.warning('Las contraseñas no coinciden');
+        } else if (formData.password.length < 6) {
+            toast.warning('La contraseña debe tener al menos 6 caracteres');
+        } else {
+            toast.success('OK');
+        }
+    }
   }
 
   const onChange = (e) => {
@@ -52,6 +77,7 @@ export default function SignUpForm({ setShowModal }) {
                     name='email'
                     value={formData.email}
                     onChange={onChange}
+                    noValidate
                 />
             </Form.Group>
 
