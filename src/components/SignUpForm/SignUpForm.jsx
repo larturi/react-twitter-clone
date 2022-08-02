@@ -3,16 +3,17 @@ import { Row, Col, Form, Button, Spinner } from 'react-bootstrap';
 import { values, size } from 'lodash';
 import { toast } from 'react-toastify';
 import { isEmailValid } from '../../helpers/validations';
+import { signUpApi } from '../../api/auth';
 
 import './SignUpForm.scss';
 
 export default function SignUpForm({ setShowModal }) {
 
   const [formData, setFormData] = useState(initialFormValue());
+  const [signUpLoading, setSignUpLoading] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
 
     let validCount = 0;
 
@@ -33,7 +34,20 @@ export default function SignUpForm({ setShowModal }) {
         } else if (formData.password.length < 6) {
             toast.warning('La contraseña debe tener al menos 6 caracteres');
         } else {
-            toast.success('OK');
+            setSignUpLoading(true);
+            signUpApi(formData).then(response => {
+                if(response.code) {
+                    toast.warning(response.message);
+                } else {
+                    toast.success('Usuario registrado correctamente');
+                    setShowModal(false);
+                    setFormData(initialFormValue);
+                }
+            }).catch(() => {
+                toast.error('Error al intentar registrar el usuario');
+            }).finally(() => {
+                setSignUpLoading(false);
+            });
         }
     }
   }
@@ -104,8 +118,13 @@ export default function SignUpForm({ setShowModal }) {
                 </Row>
             </Form.Group>
 
-            <Button variant='primary' type='submit'>
-                Registrarse
+            <Button 
+                variant='primary' 
+                type='submit'
+
+            >
+                { !signUpLoading ? 'Registrarse' : <Spinner animation="border" />}
+                
             </Button>
         </Form>
     </div>
