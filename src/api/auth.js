@@ -1,6 +1,6 @@
 import { result } from "lodash";
 
-export function signUpApi(user) {
+export async function signUpApi(user) {
 
     const url = `${import.meta.env.VITE_APP_API_URL}/register`;
     const { passwordConfirm, ...userTemp } = user;
@@ -19,6 +19,7 @@ export function signUpApi(user) {
 
     return fetch(url, params).then(response => {
         if (response.status >= 200 && response.status < 300) {
+            console.log('OK');
             return response.json();
         } else {
             return { error: true, message: 'Email no disponible' }

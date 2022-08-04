@@ -8,7 +8,6 @@ import {
   faComment
 } from "@fortawesome/free-solid-svg-icons";
 
-import Logo from '../../assets/png/logo.png';
 import LogoWhite from '../../assets/png/logo-white.png';
 import BasicModal from '../../components/Modal/BasicModal/BasicModal';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
@@ -47,7 +46,6 @@ export default function SignInSignUp() {
 function LeftComponent() {
    return (
       <Col className='signin-signup__left' xs={6}>
-         <img src={Logo} alt='Logo' />
          <div>
             <h2>
                <FontAwesomeIcon icon={faSearch} />
