@@ -11,6 +11,7 @@ import {
 import LogoWhite from '../../assets/png/logo-white.png';
 import BasicModal from '../../components/Modal/BasicModal/BasicModal';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
+import SignInForm from '../../components/SignInForm/SignInForm';
 
 import './SignInSignUp.scss';
 
@@ -76,7 +77,7 @@ function RightComponent({openModal, setShowModal}) {
                Registrate
             </Button>
 
-            <Button variant='outline-primary' onClick={() => openModal(<h4>Formulario</h4>)}>
+            <Button variant='outline-primary' onClick={() => openModal(<SignInForm />)}>
                Iniciar Sesión
             </Button>
          </div>
