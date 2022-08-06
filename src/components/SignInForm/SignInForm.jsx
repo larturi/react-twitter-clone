@@ -1,14 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Spinner } from 'react-bootstrap';
 import { values, size } from 'lodash';
 import { toast } from 'react-toastify';
 import { isEmailValid } from '../../helpers/validations';
+import { signInApi } from '../../api/auth';
 
 import './SignInForm.scss';
 
 export default function SignInForm() {
    const [formData, setFormData] = useState(initialFormValue());
    const [signInLoading, setSignInLoading] = useState(false);
+
+   const login = async () => {
+      const result = await signInApi(formData);
+
+      if(result.message) {
+         toast.error(result.message);
+      } else  {
+         console.log(result.token);
+      }
+      
+      setSignInLoading(false);
+   }
+
+   useEffect(() => {
+      if(signInLoading) {
+         login();
+      }
+   }, [signInLoading])
+   
 
    const onSubmit = (e) => {
       e.preventDefault();
@@ -31,7 +51,6 @@ export default function SignInForm() {
             toast.warning('La contraseña debe tener al menos 6 caracteres');
         } else {
             setSignInLoading(true);
-            console.log(1);
         }
       }
    };
