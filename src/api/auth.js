@@ -1,4 +1,5 @@
 import { result } from "lodash";
+import { TOKEN } from "../utils/constants";
 
 export async function signUpApi(user) {
 
@@ -57,4 +58,8 @@ export async function signInApi(user) {
     });
 
 
+}
+
+export async function setTokenApi(token) {
+    localStorage.setItem(TOKEN, token);
 }
