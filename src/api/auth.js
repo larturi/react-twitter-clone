@@ -1,5 +1,6 @@
-import { result } from "lodash";
-import { TOKEN } from "../utils/constants";
+import { result } from 'lodash';
+import jwtDecode from 'jwt-decode';
+import { TOKEN } from '../utils/constants';
 
 export async function signUpApi(user) {
 
@@ -60,6 +61,41 @@ export async function signInApi(user) {
 
 }
 
-export async function setTokenApi(token) {
+export function setTokenApi(token) {
     localStorage.setItem(TOKEN, token);
+}
+
+export function getTokenApi() {
+    return localStorage.getItem(TOKEN);
+}
+
+export function logoutApi() {
+    localStorage.removeItem(TOKEN);
+}
+
+export function isUserAutenticatedApi() {
+    const token = getTokenApi();
+    
+    if(!token) {
+        logoutApi();
+        return false;
+    }
+
+    if(isTokenExpired(token)) {
+        logoutApi();
+        return false;
+    }
+
+    return jwtDecode(token);
+}
+
+function isTokenExpired(token) {
+    const { exp } = jwtDecode(token);
+    const expire = exp * 1000;
+    const timeout = expire - Date.now();
+
+    if(timeout < 0) {
+        return true;
+    } 
+    return false;
 }
