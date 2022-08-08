@@ -9,11 +9,11 @@ export default function BasicLayout({ children, className }) {
   return (
     <Container className={`basic-layout ${className}`}>
         <Row>
-          <Col xs={3} className='BasicLayout__menu'>
+          <Col xs={3} className='basic-layout__menu'>
             <MenuLeft />
           </Col>
 
-          <Col xs={9} className='BasicLayout__content'>
+          <Col xs={9} className='basic-layout__content'>
             {children}
           </Col>
         </Row>

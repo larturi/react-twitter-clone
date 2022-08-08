@@ -1,6 +1,7 @@
 import Home from "../pages/Home";
 import Error404 from "../pages/Error404";
 import BasicLayout from "../layouts/BasicLayout";
+import MinimalLayout from "../layouts/MinimalLayout";
 
 export default [
     {
@@ -13,7 +14,7 @@ export default [
     {
         path: '*',
         component: Error404,
-        layout: BasicLayout,
+        layout: MinimalLayout,
         className: 'error404',
         exact: true,
     }
