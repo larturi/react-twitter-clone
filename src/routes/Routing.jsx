@@ -5,7 +5,9 @@ import { map } from 'lodash';
 import routes from './routes';
 
 const getElement = (route) => (
-  <route.component />
+  <route.layout className={route.className}>
+    <route.component />
+  </route.layout>
 );
 
 export default function Routing() {
@@ -13,7 +15,11 @@ export default function Routing() {
     <BrowserRouter>
         <Routes>
           {map(routes, (route, index) => (
-            <Route key={index} path={route.path} element={getElement(route)} />
+            <Route 
+              key={index} 
+              path={route.path} 
+              element={getElement(route)} 
+            />
           ))}
         </Routes>
     </BrowserRouter>
