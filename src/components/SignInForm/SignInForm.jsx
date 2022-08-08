@@ -7,7 +7,7 @@ import { signInApi, setTokenApi } from '../../api/auth';
 
 import './SignInForm.scss';
 
-export default function SignInForm() {
+export default function SignInForm({setRefreshCheckLogin}) {
    const [formData, setFormData] = useState(initialFormValue());
    const [signInLoading, setSignInLoading] = useState(false);
 
@@ -18,6 +18,7 @@ export default function SignInForm() {
          toast.error(result.message);
       } else  {
          setTokenApi(result.token);
+         setRefreshCheckLogin(true);
       }
       
       setSignInLoading(false);

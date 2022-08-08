@@ -3,14 +3,20 @@ import SignInSignOut from './pages/SignInSignUp';
 import { ToastContainer } from 'react-toastify'
 import { AuthContext } from './context/context';
 import { isUserAutenticatedApi } from './api/auth';
+import Routing from './routes/Routing';
 
 export default function App() {
    const [user, setUser] = useState(null);
+   const [isLoadedUser, setIsLoadedUser] = useState(false);
+   const [refreshCheckLogin, setRefreshCheckLogin] = useState(false);
 
    useEffect(() => {
      setUser(isUserAutenticatedApi());
-   }, [])
-   
+     setRefreshCheckLogin(false);
+     setIsLoadedUser(true);
+   }, [refreshCheckLogin]);
+
+   if(!isLoadedUser) return null;
 
    return (
       <AuthContext.Provider
@@ -18,11 +24,9 @@ export default function App() {
       >
          {
             user ? (
-               <div>
-                  <p>Estas logueado</p>
-               </div>
+               <Routing />
             ) : (
-               <SignInSignOut />
+               <SignInSignOut setRefreshCheckLogin={setRefreshCheckLogin} />
             )
          }
          <ToastContainer

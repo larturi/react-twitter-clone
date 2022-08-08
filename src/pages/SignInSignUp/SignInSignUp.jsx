@@ -15,7 +15,7 @@ import SignInForm from '../../components/SignInForm/SignInForm';
 
 import './SignInSignUp.scss';
 
-export default function SignInSignUp() {
+export default function SignInSignUp({setRefreshCheckLogin}) {
 
    const [showModal, setShowModal] = useState(false);
    const [contentModal, setContentModal] = useState(null);
@@ -30,7 +30,11 @@ export default function SignInSignUp() {
          <Container className='signin-signup' fluid>
            <Row>
                <LeftComponent />
-               <RightComponent openModal={openModal} setShowModal={setShowModal} />
+               <RightComponent 
+                  openModal={openModal} 
+                  setShowModal={setShowModal} 
+                  setRefreshCheckLogin={setRefreshCheckLogin}
+               />
             </Row>
          </Container>
 
@@ -65,7 +69,7 @@ function LeftComponent() {
    );
 }
 
-function RightComponent({openModal, setShowModal}) {
+function RightComponent({openModal, setShowModal, setRefreshCheckLogin}) {
    return (
       <Col className='signin-signup__right' xs={6}>
          <div>
@@ -77,7 +81,7 @@ function RightComponent({openModal, setShowModal}) {
                Registrate
             </Button>
 
-            <Button variant='outline-primary' onClick={() => openModal(<SignInForm />)}>
+            <Button variant='outline-primary' onClick={() => openModal(<SignInForm setRefreshCheckLogin={setRefreshCheckLogin} />)}>
                Iniciar Sesión
             </Button>
          </div>
