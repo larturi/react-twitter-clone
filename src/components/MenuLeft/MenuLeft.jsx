@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { logoutApi } from '../../api/auth';
+import useAuth from '../../hooks/useAuth';
 import {
     faHome,
     faUser,
@@ -15,12 +16,15 @@ import './MenuLeft.scss';
 
 export default function MenuLeft() {
 
+  const {user} = useAuth();
+
   const logoutHandler = () => {
-    logoutApi();
+    logoutApi(); 
     window.location.reload();
   }
 
   return (
+    
     <div className="left-menu">
         <img className="logo" src={LogoWhite} alt="Twitter Clone" />
 
@@ -30,7 +34,7 @@ export default function MenuLeft() {
         <Link to="/users">
             <FontAwesomeIcon icon={faUsers} /> Usuarios
         </Link>
-        <Link to="/profile">
+        <Link to={`/${user?._id}`}>
             <FontAwesomeIcon icon={faUser} /> Perfil
         </Link>
         <Link to="/" onClick={logoutHandler}>
