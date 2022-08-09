@@ -1,4 +1,3 @@
-import { result } from 'lodash';
 import jwtDecode from 'jwt-decode';
 import { TOKEN } from '../utils/constants';
 
