@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Button, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { getUserApi } from '../../api/user';
+import useAuth from '../../hooks/useAuth';
 import BannerAvatar from '../../components/User/BannerAvatar/BannerAvatar';
 
 import './User.scss';
@@ -11,6 +12,8 @@ const User = () => {
     let { user_id } = useParams();
     const [userNameTitle, setUserNameTitle] = useState('...');
     const [user, setUser] = useState(null);
+
+    const loggedUser = useAuth();
 
     useEffect(() => {
         getUserApi(user_id).then(response => {
@@ -34,7 +37,7 @@ const User = () => {
                     {userNameTitle}
                 </h2>
             </div>
-            <BannerAvatar user={user} />
+            <BannerAvatar user={user} loggedUser={loggedUser} />
             <div>
                 Info User
             </div>
