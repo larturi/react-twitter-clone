@@ -3,23 +3,24 @@ import { useParams } from 'react-router-dom';
 import { Button, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { getUserApi } from '../../api/user';
+import BannerAvatar from '../../components/User/BannerAvatar/BannerAvatar';
 
 import './User.scss';
 
 const User = () => {
     let { user_id } = useParams();
     const [userNameTitle, setUserNameTitle] = useState('...');
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         getUserApi(user_id).then(response => {
-            console.log(response)
-
             if(response.error) {
                 setUserNameTitle('El usuario no existe');
                 toast.error('El usuario no existe');
             } else {
                 if(response?.name !== '') {
                     setUserNameTitle(response.name + ' ' + response.last_name);
+                    setUser(response);
                 } 
             }
            
@@ -33,9 +34,7 @@ const User = () => {
                     {userNameTitle}
                 </h2>
             </div>
-            <div>
-                BannerUser
-            </div>
+            <BannerAvatar user={user} />
             <div>
                 Info User
             </div>
