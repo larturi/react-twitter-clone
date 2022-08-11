@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import avatarNotFound from '../../../assets/png/avatar-no-found.png';
 import ConfigModal from '../../Modal/ConfigModal';
+import EditUserForm from '../EditUserForm/EditUserForm';
 
 import './BannerAvatar.scss';
 
@@ -35,7 +36,7 @@ const BannerAvatar = ({ user, loggedUser }) => {
                 setShow={setShowModal}
                 title='Editar Perfil' 
             >
-                <p>Formulario de edicion</p>
+                <EditUserForm user={user} setShowModal={setShowModal} />
             </ConfigModal>
         </div>
     );
