@@ -9,7 +9,7 @@
 
 This project was bootstrapped with Vite.js.
 
-`npm install`
+`yarn install`
 
 `npm run dev`
 

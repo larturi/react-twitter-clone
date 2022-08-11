@@ -7,6 +7,7 @@ import useAuth from '../../hooks/useAuth';
 import BannerAvatar from '../../components/User/BannerAvatar/BannerAvatar';
 
 import './User.scss';
+import InfoUser from '../../components/User/InfoUser/InfoUser';
 
 const User = () => {
     let { user_id } = useParams();
@@ -38,9 +39,7 @@ const User = () => {
                 </h2>
             </div>
             <BannerAvatar user={user} loggedUser={loggedUser} />
-            <div>
-                Info User
-            </div>
+            <InfoUser user={user} />
             <div className='user__tweets'>Lista de Tweets</div>
         </>
     );
