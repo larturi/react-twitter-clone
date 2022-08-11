@@ -2,14 +2,11 @@ import React from 'react';
 import moment from 'moment';
 import localization from 'moment/locale/es';
 
-import { ReactComponent as Location } from '../../../assets/svg/location.svg';
-import { ReactComponent as WebSite } from '../../../assets/svg/link.svg';
-import { ReactComponent as Calendar } from '../../../assets/svg/date-birth.svg';
+import { Location, WebSite, Calendar } from '../../../helpers/icons';
 
 import './InfoUser.scss';
 
 const InfoUser = ({user}) => {
-    console.log(user)
     return (
         <div className='info-user'>
             <h2 className='name'>
