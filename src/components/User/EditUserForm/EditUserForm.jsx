@@ -1,22 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Form, Button, Row, Col, Spinner } from 'react-bootstrap';
-import DatePicker from "react-datepicker";
-import es from "date-fns/locale/es";
+import DatePicker from 'react-datepicker';
+import es from 'date-fns/locale/es';
+import { useDropzone } from 'react-dropzone';
 
 import './EditUserForm.scss';
 
 const EditUserForm = (props) => {
-   const {user, setShowModal} = props;
+   const { user, setShowModal } = props;
 
    const [formData, setFormData] = useState(initialValue(user));
 
-//    const [bannerUrl, setBannerUrl] = useState(
-//       user?.banner ? `${API_HOST}/obtenerBanner?id=${user.id}` : null
-//    );
+   const [bannerUrl, setBannerUrl] = useState(
+      user?.banner
+         ? `${import.meta.env.VITE_APP_API_URL}/getBanner?id=${user.id}`
+         : null
+   );
+
    const [bannerFile, setBannerFile] = useState(null);
-//    const [avatarUrl, setAvatarUrl] = useState(
-//       user?.avatar ? `${API_HOST}/obtenerAvatar?id=${user.id}` : null
-//    );
+
+   const onDropBanner = useCallback((acceptedFile) => {
+      console.log(acceptedFile);
+   });
+
+   const {
+      getRootProps: getRootPropsBanner,
+      getInputProps: getInputPropsBanner,
+   } = useDropzone({
+      accept: 'image/jpg, image/png, image/gif, image/jpeg',
+      noKeyboard: true,
+      multiple: false,
+      onDrop: onDropBanner,
+   });
+
+   //    const [avatarUrl, setAvatarUrl] = useState(
+   //       user?.avatar ? `${API_HOST}/obtenerAvatar?id=${user.id}` : null
+   //    );
+
    const [avatarFile, setAvatarFile] = useState(null);
    const [loading, setLoading] = useState(false);
 
@@ -56,6 +76,13 @@ const EditUserForm = (props) => {
 
    return (
       <div className='edit-user-form'>
+         <div
+            className='banner'
+            style={{ backgroundImage: `url('${bannerUrl}')` }}
+            { ...getRootPropsBanner() }
+         >
+            <input {...getInputPropsBanner()} />
+         </div>
          <Form onSubmit={onSubmit}>
             <Form.Group>
                <Row>
