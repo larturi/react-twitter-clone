@@ -3,6 +3,7 @@ import { Form, Button, Row, Col, Spinner } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import es from 'date-fns/locale/es';
 import { useDropzone } from 'react-dropzone';
+import { Camera } from '../../../helpers/icons';
 
 import './EditUserForm.scss';
 
@@ -20,7 +21,9 @@ const EditUserForm = (props) => {
    const [bannerFile, setBannerFile] = useState(null);
 
    const onDropBanner = useCallback((acceptedFile) => {
-      console.log(acceptedFile);
+      const file = acceptedFile[0];
+      setBannerUrl(URL.createObjectURL(file));
+      setBannerFile(file);
    });
 
    const {
@@ -43,8 +46,6 @@ const EditUserForm = (props) => {
    const onSubmit = async (e) => {
       e.preventDefault();
       setLoading(true);
-
-      console.log(formData);
 
       // if (bannerFile) {
       //   await uploadBannerApi(bannerFile).catch(() => {
@@ -82,6 +83,7 @@ const EditUserForm = (props) => {
             { ...getRootPropsBanner() }
          >
             <input {...getInputPropsBanner()} />
+            <Camera />
          </div>
          <Form onSubmit={onSubmit}>
             <Form.Group>
