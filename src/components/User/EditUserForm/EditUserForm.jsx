@@ -7,7 +7,9 @@ import './EditUserForm.scss';
 
 const EditUserForm = (props) => {
    const {user, setShowModal} = props;
+
    const [formData, setFormData] = useState(initialValue(user));
+
 //    const [bannerUrl, setBannerUrl] = useState(
 //       user?.banner ? `${API_HOST}/obtenerBanner?id=${user.id}` : null
 //    );
@@ -21,6 +23,8 @@ const EditUserForm = (props) => {
    const onSubmit = async (e) => {
       e.preventDefault();
       setLoading(true);
+
+      console.log(formData);
 
       // if (bannerFile) {
       //   await uploadBannerApi(bannerFile).catch(() => {
@@ -59,18 +63,18 @@ const EditUserForm = (props) => {
                      <Form.Control
                         type='text'
                         placeholder='Nombre'
-                        name='nombre'
-                        defaultValue={formData.nombre}
+                        name='name'
                         onChange={onChange}
+                        defaultValue={formData.name}
                      />
                   </Col>
                   <Col>
                      <Form.Control
                         type='text'
                         placeholder='Apellidos'
-                        name='apellidos'
-                        defaultValue={formData.apellidos}
+                        name='last_name'
                         onChange={onChange}
+                        defaultValue={formData.last_name}
                      />
                   </Col>
                </Row>
@@ -82,9 +86,9 @@ const EditUserForm = (props) => {
                   row='3'
                   placeholder='Agrega tu biografía'
                   type='text'
-                  name='biografia'
-                  defaultValue={formData.biografia}
+                  name='biography'
                   onChange={onChange}
+                  defaultValue={formData.biography}
                />
             </Form.Group>
 
@@ -92,9 +96,9 @@ const EditUserForm = (props) => {
                <Form.Control
                   type='text'
                   placeholder='Sitio web'
-                  name='sitioWeb'
-                  defaultValue={formData.sitioWeb}
+                  name='web_site'
                   onChange={onChange}
+                  defaultValue={formData.web_site}
                />
             </Form.Group>
 
@@ -102,10 +106,10 @@ const EditUserForm = (props) => {
                <DatePicker
                   placeholder='Fecha de nacimiento'
                   locale={es}
-                  selected={new Date()}
-                //   onChange={(value) =>
-                //      setFormData({ ...formData, fechaNacimiento: value })
-                //   }
+                  selected={new Date(formData.birth_date)}
+                  onChange={(value) =>
+                     setFormData({ ...formData, birth_date: value })
+                  }
                />
             </Form.Group>
 
@@ -119,12 +123,12 @@ const EditUserForm = (props) => {
 
 function initialValue(user) {
    return {
-      nombre: user.nombre || '',
-      apellidos: user.apellidos || '',
-      biografia: user.biografia || '',
-      ubicacion: user.ubicacion || '',
-      sitioWeb: user.sitioWeb || '',
-      fechaNacimiento: user.fechaNacimiento || '',
+      name: user.name || '',
+      last_name: user.last_name || '',
+      biography: user.biography || '',
+      city: user.city || '',
+      web_site: user.web_site || '',
+      birth_date: user.birth_date || '',
    };
 }
 
