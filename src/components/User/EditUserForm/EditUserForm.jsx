@@ -5,7 +5,7 @@ import es from 'date-fns/locale/es';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
 import { Camera } from '../../../helpers/icons';
-import { uploadBannerApi, uploadAvatarApi } from '../../../api/user';
+import { uploadBannerApi, uploadAvatarApi, updateInfoUserApi } from '../../../api/user';
 
 import './EditUserForm.scss';
 
@@ -79,13 +79,13 @@ const EditUserForm = (props) => {
         });
       }
 
-      // await updateInfoApi(formData)
-      //   .then(() => {
-      //     setShowModal(false);
-      //   })
-      //   .catch(() => {
-      //     toast.error("Error al actualizar los datos");
-      //   });
+      await updateInfoUserApi(formData)
+        .then(() => {
+          setShowModal(false);
+        })
+        .catch(() => {
+          toast.error("Error al actualizar los datos");
+        });
 
       setLoading(false);
       window.location.reload();
