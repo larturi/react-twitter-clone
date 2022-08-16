@@ -5,7 +5,7 @@ import es from 'date-fns/locale/es';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
 import { Camera } from '../../../helpers/icons';
-import { uploadBannerApi } from '../../../api/user';
+import { uploadBannerApi, uploadAvatarApi } from '../../../api/user';
 
 import './EditUserForm.scss';
 
@@ -73,11 +73,11 @@ const EditUserForm = (props) => {
         });
       }
 
-      // if (avatarFile) {
-      //   await uploadAvatarApi(avatarFile).catch(() => {
-      //     toast.error("Error al subir el nuevo avatar");
-      //   });
-      // }
+      if (avatarFile) {
+        await uploadAvatarApi(avatarFile).catch(() => {
+          toast.error("Error al subir el nuevo avatar");
+        });
+      }
 
       // await updateInfoApi(formData)
       //   .then(() => {
