@@ -3,7 +3,9 @@ import { Form, Button, Row, Col, Spinner } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import es from 'date-fns/locale/es';
 import { useDropzone } from 'react-dropzone';
+import { toast } from 'react-toastify';
 import { Camera } from '../../../helpers/icons';
+import { uploadBannerApi } from '../../../api/user';
 
 import './EditUserForm.scss';
 
@@ -36,9 +38,27 @@ const EditUserForm = (props) => {
       onDrop: onDropBanner,
    });
 
-   //    const [avatarUrl, setAvatarUrl] = useState(
-   //       user?.avatar ? `${API_HOST}/obtenerAvatar?id=${user.id}` : null
-   //    );
+   const onDropAvatar = useCallback((acceptedFile) => {
+      const file = acceptedFile[0];
+      setAvatarUrl(URL.createObjectURL(file));
+      setAvatarFile(file);
+   });
+
+   const {
+      getRootProps: getRootPropsAvatar,
+      getInputProps: getInputPropsAvatar,
+   } = useDropzone({
+      accept: 'image/jpg, image/png, image/gif, image/jpeg',
+      noKeyboard: true,
+      multiple: false,
+      onDrop: onDropAvatar,
+   });
+
+   const [avatarUrl, setAvatarUrl] = useState(
+      user?.avatar
+         ? `${import.meta.env.VITE_APP_API_URL}/getAvatar?id=${user.id}`
+         : null
+   );
 
    const [avatarFile, setAvatarFile] = useState(null);
    const [loading, setLoading] = useState(false);
@@ -47,11 +67,11 @@ const EditUserForm = (props) => {
       e.preventDefault();
       setLoading(true);
 
-      // if (bannerFile) {
-      //   await uploadBannerApi(bannerFile).catch(() => {
-      //     toast.error("Error al subir el nuevo banner");
-      //   });
-      // }
+      if (bannerFile) {
+        await uploadBannerApi(bannerFile).catch(() => {
+          toast.error("Error al subir el nuevo banner");
+        });
+      }
 
       // if (avatarFile) {
       //   await uploadAvatarApi(avatarFile).catch(() => {
@@ -67,8 +87,8 @@ const EditUserForm = (props) => {
       //     toast.error("Error al actualizar los datos");
       //   });
 
-      // setLoading(false);
-      // window.location.reload();
+      setLoading(false);
+      window.location.reload();
    };
 
    const onChange = (e) => {
@@ -83,6 +103,15 @@ const EditUserForm = (props) => {
             { ...getRootPropsBanner() }
          >
             <input {...getInputPropsBanner()} />
+            <Camera />
+         </div>
+
+         <div 
+            className='avatar'
+            style={{ backgroundImage: `url('${avatarUrl}')` }}
+            { ...getRootPropsAvatar() }
+         >
+            <input {...getInputPropsAvatar()} />
             <Camera />
          </div>
          <Form onSubmit={onSubmit}>

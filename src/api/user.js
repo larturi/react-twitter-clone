@@ -23,5 +23,32 @@ export function getUserApi(idUser) {
     }).catch(err => {
         return { error: true, message: err.message }
     });
+}
+
+export function uploadBannerApi(file) {
+
+    const url = `${import.meta.env.VITE_APP_API_URL}/uploadBanner`;
+
+    const formData = new FormData();
+    formData.append('banner', file);
+
+    const params = {
+        method: 'POST',
+        headers: { 
+            'Authorization': `Bearer ${getTokenApi()}`
+        },
+        body: formData
+    }
+
+    return fetch(url, params)
+        .then(response => {
+            return response.json();
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => {
+            return { error: true, message: err.message }
+        });
 
 }
