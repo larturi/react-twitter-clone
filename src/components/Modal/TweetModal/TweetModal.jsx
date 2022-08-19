@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import classNames from 'classnames';
 import { createTweetApi } from '../../../api/tweet';
 
@@ -19,14 +20,11 @@ const TweetModal = ({ showModal, setShowModal }) => {
         if (message.length > 0 && message.length <= maxLength) {
          createTweetApi(message)
             .then((response) => {
-              if (response?.code >= 200 && response?.code < 300) {
                 toast.success(response.message);
-                setShow(false);
-                window.location.reload();
-              }
+                setShowModal(false);
             })
             .catch(() => {
-              toast.warning("Erorr al enviar el tweet, inténtelo más tarde.");
+              toast.warning("Eror al enviar el tweet, inténtelo más tarde.");
             });
         }
       };
