@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import classNames from 'classnames';
+import { createTweetApi } from '../../../api/tweet';
 
 import { Close } from "../../../helpers/icons";
 
@@ -15,20 +16,19 @@ const TweetModal = ({ showModal, setShowModal }) => {
     const onSubmit = (e) => {
         e.preventDefault();
     
-        // if (message.length > 0 && message.length <= maxLength) {
-        //   addTweetApi(message)
-        //     .then((response) => {
-        //       console.log(response);
-        //       if (response?.code >= 200 && response?.code < 300) {
-        //         toast.success(response.message);
-        //         setShow(false);
-        //         window.location.reload();
-        //       }
-        //     })
-        //     .catch(() => {
-        //       toast.warning("Erorr al enviar el tweet, inténtelo más tarde.");
-        //     });
-        // }
+        if (message.length > 0 && message.length <= maxLength) {
+         createTweetApi(message)
+            .then((response) => {
+              if (response?.code >= 200 && response?.code < 300) {
+                toast.success(response.message);
+                setShow(false);
+                window.location.reload();
+              }
+            })
+            .catch(() => {
+              toast.warning("Erorr al enviar el tweet, inténtelo más tarde.");
+            });
+        }
       };
 
    return (
