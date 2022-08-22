@@ -9,8 +9,6 @@ import { replaceURLWithHTMLLinks } from '../../utils/functions';
 import './TweetsList.scss';
 
 const TweetsList = ({tweets}) => {
-
-    console.log(tweets)
     return (
         <div className="list-tweets">
             {

@@ -1,10 +1,18 @@
 import Home from '../pages/Home';
 import User from '../pages/User';
+import Users from '../pages/Users';
 import Error404 from '../pages/Error404';
 import BasicLayout from '../layouts/BasicLayout';
 import MinimalLayout from '../layouts/MinimalLayout';
 
 export default [
+    {
+        path: '/users',
+        component: Users,
+        layout: BasicLayout,
+        className: 'users',
+        exact: true,
+    },
     {
         path: '/:user_id',
         component: User,

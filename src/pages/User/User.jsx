@@ -26,7 +26,6 @@ const User = () => {
         setLoadingTweets(true);
 
         getUserTweetsApi(user_id, pageTemp).then(response => {
-            console.log(response)
             if(!response) {
                 setLoadingTweets(0);
             } else {

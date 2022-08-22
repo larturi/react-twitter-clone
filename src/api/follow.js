@@ -50,3 +50,24 @@ export function unfollowUserApi(idUser) {
       .then(result => result)
       .catch(err => err);
 }
+
+export function getFollowsApi(paramsUrl) {
+
+   const {page, type, search} = paramsUrl;
+   const queryString = `page=${page}&type=${type}&search=${search}`;
+
+   const url = `${import.meta.env.VITE_APP_API_URL}/userSearch?${queryString}`;
+
+   const params = {
+      method: 'GET',
+      headers: {
+         'Content-Type': 'application/json',
+         Authorization: `Bearer ${getTokenApi()}`,
+      },
+   };
+
+   return fetch(url, params)
+      .then(response => response.json())
+      .then(result => result)
+      .catch(err => err);
+}
