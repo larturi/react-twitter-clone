@@ -83,7 +83,7 @@ const Users = () => {
 function useUserQuery(location) {
    const {
       page = 1,
-      type = 'new',
+      type = 'follow',
       search = '',
    } = queryString.parse(location.search);
    return { page, type, search };
