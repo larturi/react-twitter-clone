@@ -17,6 +17,9 @@ const Users = () => {
 
    const [users, setUsers] = useState(null);
    const [typeUser, setTypeUser] = useState('follow');
+   const [btnLoading, setBtnLoading] = useState(false);
+   const [pageNumber, setPageNumber] = useState(1);
+   const [isLoading, setIsLoading] = useState(false);
 
    const onSearch = useDebouncedCallback(value => {
       setUsers(null);
@@ -31,21 +34,32 @@ const Users = () => {
    }, 200);
 
    useEffect(() => {
+      setIsLoading(true);
       getFollowsApi({ page, type, search })
          .then((results) => {
-            if (isEmpty(results)) {
-               setUsers([]);
+            if(pageNumber == 1) {
+               if (isEmpty(results)) {
+                  setUsers([]);
+               } else {
+                  setUsers(results);
+               }
             } else {
-               setUsers(results);
+               if(!results || isEmpty(results)) {
+                  setBtnLoading(0);
+               } else {
+                  setUsers([...users, ...results]);
+                  setBtnLoading(false);
+               }
             }
          })
-         .catch(() => {
+         .catch((e) => {
             setUsers([]);
-         });
+         })
+         .finally(() => setIsLoading(false));
    }, [location]);
 
    const onChangeType = (type) => {
-      setUsers(null);
+      setUsers([]);
 
       if (type === 'new') {
          setTypeUser('new');
@@ -62,6 +76,24 @@ const Users = () => {
          })
       });
    };
+
+   const moreData = () => {
+      setBtnLoading(true);
+      const pageAux = pageNumber + 1;
+
+      setPageNumber(pageNumber + 1);
+
+      navigate({
+         pathname: location.pathname,
+         search: queryString.stringify({
+            type: type,
+            page: pageAux,
+            search: ""
+         })
+      });
+
+      //setBtnLoading(false);
+   }
 
    return (
       <>
@@ -91,7 +123,16 @@ const Users = () => {
                Cargando...
             </div>
          ) : (
-            <ListUsers users={users} />
+            <>
+               <ListUsers users={users} isLoading={btnLoading} />
+               <Button onClick={moreData} className="load-more">
+                  { !btnLoading ? (
+                     btnLoading !== 0 && "Cargar mas usuarios"
+                  ) : (
+                     <Spinner as='span' animation='grow' size='sm' role='status' aria-hidden='true' />
+                  )}
+               </Button>
+            </>
          )}
       </>
    );

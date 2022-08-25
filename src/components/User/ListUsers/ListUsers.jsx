@@ -1,12 +1,12 @@
 import React from 'react';
-import { map, isEmpty } from 'lodash';
+import { map } from 'lodash';
 
 import './ListUsers.scss';
 import User from './User';
 
-const ListUsers = ({ users }) => {
-    
-    if(isEmpty(users)) return (
+const ListUsers = ({ users, isLoading }) => {
+
+    if(!users && !isLoading) return (
         <div className="emptyResults">
             <h2>No se han encontrado resultados</h2>
         </div>

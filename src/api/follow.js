@@ -53,7 +53,7 @@ export function unfollowUserApi(idUser) {
 
 export function getFollowsApi(paramsUrl) {
 
-   const {page, type, search} = paramsUrl;
+   const {page = 1, type = 'follow', search = ''} = paramsUrl;
    const queryString = `page=${page}&type=${type}&search=${search}`;
 
    const url = `${import.meta.env.VITE_APP_API_URL}/userSearch?${queryString}`;
