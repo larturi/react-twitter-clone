@@ -11,7 +11,7 @@ export async function signUpApi(user) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             email: userTemp.email.toLowerCase(),
-            password: userTemp.email,
+            password: userTemp.password,
             name: userTemp.name,
             last_name: userTemp.lastName,
             birth_date: new Date(),

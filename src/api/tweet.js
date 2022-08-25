@@ -47,3 +47,22 @@ export function getUserTweetsApi(idUser, page) {
       .then((result) => result)
       .catch((err) => err);
 }
+
+export function getTweetsFollowersApi(page = 1) {
+  const url = `${
+      import.meta.env.VITE_APP_API_URL
+   }/tweetsFollowing?page=${page}`;
+
+   const params = {
+      method: 'GET',
+      headers: {
+         'Content-Type': 'application/json',
+         Authorization: `Bearer ${getTokenApi()}`,
+      },
+   };
+
+   return fetch(url, params)
+      .then((response) => response.json())
+      .then((result) => result)
+      .catch((err) => err);
+}

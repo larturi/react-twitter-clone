@@ -29,7 +29,7 @@ function Tweet(props) {
     getUserApi(tweet.user_id).then((response) => {
       setUserInfo(response);
       setAvatarUrl(
-        (response?.avatar & response?.avatar.substring(0, 4) == 'http')
+        (response?.avatar)
           ? `${import.meta.env.VITE_APP_API_URL}/getAvatar?id=${response.id}`
           : AvatarNoFound
       );
