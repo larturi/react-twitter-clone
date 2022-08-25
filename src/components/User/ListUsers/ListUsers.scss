@@ -6,7 +6,6 @@
   a {
     text-decoration: none;
   }
-
   &__user {
     padding: 15px 30px;
     display: flex;
@@ -24,3 +23,14 @@
     }
   }
 }
+
+.emptyResults {
+  display: flex !important;
+  justify-content: center;
+  margin-top: 70px;
+
+  h2 {
+    font-size: 26px;
+  }
+ }
+

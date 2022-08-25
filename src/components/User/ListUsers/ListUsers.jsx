@@ -6,7 +6,11 @@ import User from './User';
 
 const ListUsers = ({ users }) => {
     
-    if(isEmpty(users)) return <h2>No se han encontrado resultados</h2>;
+    if(isEmpty(users)) return (
+        <div className="emptyResults">
+            <h2>No se han encontrado resultados</h2>
+        </div>
+    );
 
     return (
         <ul className='list-users'>

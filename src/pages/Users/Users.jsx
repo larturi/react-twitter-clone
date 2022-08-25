@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { isEmpty } from 'lodash';
+import { useDebouncedCallback } from 'use-debounce';
 import queryString from 'query-string';
 import { Spinner, ButtonGroup, Button } from 'react-bootstrap';
 import { getFollowsApi } from '../../api/follow';
@@ -16,6 +17,18 @@ const Users = () => {
 
    const [users, setUsers] = useState(null);
    const [typeUser, setTypeUser] = useState('follow');
+
+   const onSearch = useDebouncedCallback(value => {
+      setUsers(null);
+      navigate({
+         pathname: location.pathname,
+         search: queryString.stringify({
+            type: type,
+            page: 1,
+            search: value
+         })
+      });
+   }, 200);
 
    useEffect(() => {
       getFollowsApi({ page, type, search })
@@ -54,7 +67,11 @@ const Users = () => {
       <>
          <div className='users__title'>
             <h2>Usuarios</h2>
-            <input type='text' placeholder='Busca un usuario...' />
+            <input 
+               type='text' 
+               placeholder='Busca un usuario...'
+               onChange={(e) => onSearch(e.target.value)}
+            />
          </div>
 
          <ButtonGroup className='users__options'>
